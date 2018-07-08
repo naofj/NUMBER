@@ -15,6 +15,7 @@ public class HateNumber {
 	public static final int INDEX_ROOM_NAME = 2;
 	
 	public static void main(String[] args) {
+		
     	/** 嫌いな数字（1桁）*/
     	int intHateNumber = 0;
     	/**病室数*/
@@ -23,6 +24,7 @@ public class HateNumber {
         // 標準入力を取得
         List<String> inputStringList = new ArrayList<String>();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+        	
             while (true) {
                 String inStr = br.readLine();
                 if (inStr.isEmpty()) {
