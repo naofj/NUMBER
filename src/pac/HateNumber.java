@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HateNumber {
 	/**入力＞嫌いな数字インデックス*/
@@ -13,9 +14,9 @@ public class HateNumber {
 	public static final int INDEX_ROOM_NUMBER = 1;
 	/**入力＞病室名インデックス*/
 	public static final int INDEX_ROOM_NAME = 2;
-	
+
 	public static void main(String[] args) {
-		
+
     	/** 嫌いな数字（1桁）*/
     	int intHateNumber = 0;
     	/**病室数*/
@@ -24,7 +25,7 @@ public class HateNumber {
         // 標準入力を取得
         List<String> inputStringList = new ArrayList<String>();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-        	
+
             while (true) {
                 String inStr = br.readLine();
                 if (inStr.isEmpty()) {
@@ -76,7 +77,7 @@ public class HateNumber {
         	System.out.println("病室は必ず1部屋以上で入力してください。");
         	System.exit(1);
         }
-        
+
         //病室名の取得
         List<String> hateNumberList = new ArrayList<String>();
         for (int i=0 ; i < (inputStringList.size() - INDEX_ROOM_NAME) ; i++) {
@@ -87,15 +88,15 @@ public class HateNumber {
         	System.out.println("病室数が不整合です。期待値：" + intRoomNumber + "　入力：" + (inputStringList.size()-2));
             System.exit(1);
         }
-        
-        //病室名に嫌いな数字が含まれている場合、それ以外の部屋名を表示
+
+        //病室名に嫌いな数字が含まれていないリストを取得
         String hateNumber = String.valueOf(intHateNumber);
-        hateNumberList.stream()
+        List<String> notHateNumberList = hateNumberList.stream()
         	.filter(str -> !str.contains(hateNumber))
-        	.forEach(System.out::println);
-        //表示できる部屋名が一つもない場合、noneを表示
-        if (hateNumberList.stream().noneMatch(str -> !str.contains(hateNumber))) {
-        	System.out.println("none");
-        }
+        	.collect(Collectors.toList());
+
+        //リストに病室名が存在する場合は病室名を出力、存在しない場合は"none"を出力
+        if (notHateNumberList.isEmpty()) {System.out.println("none");}
+        else {notHateNumberList.forEach(System.out::println);}
     }
 }
